@@ -1,0 +1,74 @@
+{% extends "layout.html" %}
+
+{%  block content %}
+
+
+<!-- jumbotron and nav -->
+        
+
+  <div class="bg-gray-800 font-[sans-serif] p-6">
+      <div class="grid md:grid-cols-2 items-center gap-10 max-w-5xl max-md:max-w-md mx-auto">
+        <div class="md:h-[400px]">
+          <img src="https://readymadeui.com/hotel-img.webp" class="w-full h-full rounded-md object-cover" />
+        </div>
+
+        <div class="max-md:text-center">
+          <h3 class="text-white font-semibold md:text-3xl text-2xl md:leading-10">Prompt Delivery and Enjoyable Dining Experience.</h3>
+          <p class="text-gray-300 mt-4 text-sm leading-relaxed">Laboris qui Lorem ad tempor ut reprehenderit. Nostrud anim nulla officia ea sit deserunt. Eu eu quis anim aute Laboris qui Lorem ad tempor ut reprehenderit.</p>
+          <a href="{% url 'hotel_list' %}" type="button" class="px-5 py-2.5 mt-8 bg-blue-700 hover:bg-blue-800 text-white tracking-wider rounded text-sm outline-none">Explore</a>
+        </div>
+      </div>
+    </div>
+
+    <form class="font-[sans-serif] max-w-4xl mx-auto my-3">
+      <div class="grid sm:grid-cols-3 gap-4">
+        <div class="relative flex items-center">
+            <label class="text-sm mb-2 block">Check in Date</label>
+            <input type="date" name="checkin" id="checkin" class="px-4 py-3 bg-[#f0f1f2] text-black w-full text-sm outline-[#007bff] rounded" />
+          
+        </div>
+
+        <div class="relative flex items-center">
+            <label class="text-sm mb-2 block">Check out Date</label>
+            <input type="date" name="checkin" id="checkout" class="px-4 py-3 bg-[#f0f1f2] text-black w-full text-sm outline-[#007bff] rounded" />
+
+        </div>
+        <input type="submit"
+        class=" text-sm w-full bg-[#007bff] hover:bg-[#006bff] text-white rounded transition-all" value="search">
+      </div>
+    <div class="font-[sans-serif] bg-gray-100">
+      <div class="p-4 mx-auto lg:max-w-7xl sm:max-w-full">
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-xl:gap-4 gap-6">
+          {% for hotels_obj in hotels_objs %}
+          <div class="bg-white rounded-2xl p-5 cursor-pointer hover:-translate-y-2 transition-all relative">
+            
+
+            <div class="w-5/6  overflow-hidden mx-auto aspect-w-16 aspect-h-8 md:mb-2 mb-4">
+              {% comment %} <img src="https://readymadeui.com/images/product9.webp" alt="Product 1"
+                class="h-full w-full object-contain" /> h-[210px] {% endcomment %}
+                <a href="/hotel-detail/{{hotels_obj.uid}}">
+                        <img class="img-fluid" src="/{{hotels_obj.images.first.images}}" alt="Card image cap">
+                    
+                    </a>
+            </div>
+
+            <div>
+              <h3 class="text-lg font-extrabold text-gray-800">{{hotels_obj.hotel_name}}</h3>
+              <p class="text-gray-600 text-sm mt-2">{{hotels_obj.description|truncatechars:150}}</p>
+              
+              <p>Place.com</p>
+              <h4 class="text-lg text-gray-800 font-bold mt-4">${{hotels_obj.hotel_price}}</h4>
+            </div>
+            <a href="{% url 'hotel_detail' hotels_obj.uid %}" type="button"
+            class="px-5 py-2.5 rounded-lg text-sm tracking-wider font-medium border border-green-700 outline-none bg-transparent hover:bg-green-700 text-green-700 hover:text-white transition-all duration-300">View Detaila</a>
+          </div>
+          {% endfor %}
+        </div>
+        
+      </div>
+    </div>
+      
+    </form>
+
+{% endblock %}

@@ -1,0 +1,318 @@
+{% extends "layout.html" %}
+{% load django_bootstrap5 %}
+{% load crispy_forms_tags %}
+
+{%  block content %}
+
+<style>
+
+  .asteriskField{
+    display: None;
+  }
+
+
+
+/* body, html {
+  background-color:#EBECF0;
+} */
+
+.form body, p, input, select, textarea, button {
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: -0.2px;
+    font-size: 16px;
+}
+
+.form div, p {
+  color: #BABECC;
+  text-shadow: 1px 1px 1px #FFF;
+}
+
+
+form {
+  padding: 16px;
+  width: 16px*20;
+  margin: 0 auto;
+}
+
+.segment {
+  padding: 16px*2 0;
+  text-align: center;
+}
+
+.form button, input {
+  border: 0;
+  outline: 0;
+  font-size: 16px;
+  border-radius: 16px*20;
+  padding: 16px;
+  background-color:#AE1100;
+  text-shadow: 1px 1px 0 #FFF;
+}
+
+label {
+  display: block;
+  margin-bottom: 16px*1.5;
+  width: 100%;
+}
+
+input {
+  margin-right: 16px/2;
+  box-shadow:  inset 2px 2px 5px #BABECC, inset -5px -5px 10px #FFF;
+  width: 50%;
+  box-sizing: border-box;
+  transition: all 0.2s ease-in-out;
+  appearance: none;
+  -webkit-appearance: none;
+
+  &:focus {
+    box-shadow:  inset 1px 1px 2px #BABECC, inset -1px -1px 2px #FFF;
+  }
+}
+
+.form button {
+  color:#61677C;
+  font-weight: bold;
+  box-shadow: -5px -5px 20px #FFF,  5px 5px 20px #BABECC;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  font-weight: 600;
+  
+  &:hover {
+    box-shadow: -2px -2px 5px #FFF, 2px 2px 5px #BABECC;
+  }
+  
+  &:active {
+    box-shadow: inset 1px 1px 2px #BABECC, inset -1px -1px 2px #FFF;
+  }
+  
+  .icon {
+    margin-right: 16px/2;
+  }
+  
+  &.unit {
+    border-radius: 16px/2;
+    line-height: 0;
+    width: 16px*3;
+    height: 16px*3;
+    display:inline-flex;
+    justify-content: center;
+    align-items:center;
+    margin: 0 16px/2;
+    font-size: 16px*1.2;
+    
+    .icon {
+      margin-right: 0; 
+    }
+  }
+  
+  &.red {
+    display: block;
+    width: 100%;
+    color:#AE1100;
+  }
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  
+  label {
+    margin: 0;
+    flex: 1;
+  }
+}
+</style>
+
+<div class="d-flex justify-content-center m-5  place-item-center form">
+    <div class="col-md-4">
+        <h2 class="text-center text-success segment">Booking Form</h2>
+
+        {% for msg in messages %}
+
+        {% if msg.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+        <div class="alert alert-danger">
+            {{msg}}
+        </div>
+        {% endif %}
+        {% endfor %}
+
+        {% comment %} <form method="POST" action="">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Book Now</button>
+    </form> {% endcomment %}
+
+        <form action="" method="POST" class="shadow-lg p-3 " enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <div class="mt-3">
+                <input type="submit" name="submit" class="btn btn-primary red" value="Submit">
+            </div>
+        </form>   
+
+        <!-- <div class="font-[sans-serif] bg-white">
+      <div class="flex max-sm:flex-col gap-12 max-lg:gap-4 h-full">
+        {% comment %} <div class="bg-gradient-to-r from-gray-800 via-gray-700 to-gray-800 sm:h-screen sm:sticky sm:top-0 lg:min-w-[370px] sm:min-w-[300px]">
+          <div class="relative h-full">
+            <div class="px-4 py-8 sm:overflow-auto sm:h-[calc(100vh-60px)]">
+              <div class="space-y-4">
+
+                <div class="flex items-start gap-4">
+                  <div class="w-32 h-28 max-lg:w-24 max-lg:h-24 flex p-3 shrink-0 bg-gray-300 rounded-md">
+                    <img src='https://readymadeui.com/images/product10.webp' class="w-full object-contain" />
+                  </div>
+                  <div class="w-full">
+                    <h3 class="text-base text-white">Split Sneakers</h3>
+                    <ul class="text-xs text-gray-300 space-y-2 mt-2">
+                      <li class="flex flex-wrap gap-4">Size <span class="ml-auto">37</span></li>
+                      <li class="flex flex-wrap gap-4">Quantity <span class="ml-auto">2</span></li>
+                      <li class="flex flex-wrap gap-4">Total Price <span class="ml-auto">$40</span></li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="flex items-start gap-4">
+                  <div class="w-32 h-28 max-lg:w-24 max-lg:h-24 flex p-3 shrink-0 bg-gray-300 rounded-md">
+                    <img src='https://readymadeui.com/images/product11.webp' class="w-full object-contain" />
+                  </div>
+                  <div class="w-full">
+                    <h3 class="text-base text-white">Velvet Boots</h3>
+                    <ul class="text-xs text-gray-300 space-y-2 mt-2">
+                      <li>Size <span class="float-right">37</span></li>
+                      <li>Quantity <span class="float-right">2</span></li>
+                      <li>Total Price <span class="float-right">$40</span></li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="flex items-start gap-4">
+                  <div class="w-32 h-28 max-lg:w-24 max-lg:h-24 flex p-3 shrink-0 bg-gray-300 rounded-md">
+                    <img src='https://readymadeui.com/images/product14.webp' class="w-full object-contain" />
+                  </div>
+                  <div class="w-full">
+                    <h3 class="text-base text-white">Echo Elegance</h3>
+                    <ul class="text-xs text-gray-300 space-y-2 mt-2">
+                      <li>Size <span class="float-right">37</span></li>
+                      <li>Quantity <span class="float-right">2</span></li>
+                      <li>Total Price <span class="float-right">$40</span></li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="flex items-start gap-4">
+                  <div class="w-32 h-28 max-lg:w-24 max-lg:h-24 flex p-3 shrink-0 bg-gray-300 rounded-md">
+                    <img src='https://readymadeui.com/images/product13.webp' class="w-full object-contain" />
+                  </div>
+                  <div class="w-full">
+                    <h3 class="text-base text-white">Pumps</h3>
+                    <ul class="text-xs text-gray-300 space-y-2 mt-2">
+                      <li>Size <span class="float-right">37</span></li>
+                      <li>Quantity <span class="float-right">2</span></li>
+                      <li>Total Price <span class="float-right">$40</span></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="md:absolute md:left-0 md:bottom-0 bg-gray-800 w-full p-4">
+              <h4 class="flex flex-wrap gap-4 text-base text-white">Total <span class="ml-auto">$84.00</span></h4>
+            </div>
+          </div>
+        </div> {% endcomment %}
+
+        <div class="max-w-4xl w-full h-max rounded-md px-4 py-8 sticky top-0 mx-auto">
+          <h2 class="text-2xl font-bold text-gray-800">Complete your Booking</h2>
+          <form class="mt-8" method="POST" enctype="multipart/form-data">
+          
+            <div>
+              <h3 class="text-base text-gray-800 mb-4">Personal Details</h3>
+              <div class="grid md:grid-cols-2 gap-4">
+                <div>
+                  <input type="text" placeholder="First Name" required
+                    class="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-blue-600" />
+                </div>
+
+                <div>
+                  <input type="text" placeholder="Last Name" required
+                    class="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-blue-600" />
+                </div>
+
+                <div>
+                  <input type="email" placeholder="Email" required id="emailaddress" 
+                    class="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-blue-600" />
+                </div>
+
+                <div>
+                  <input type="number" placeholder="Phone No." required id="contact_no" 
+                    class="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-blue-600" />
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-8">
+              <h3 class="text-base text-gray-800 mb-4">Shipping Address</h3>
+              <div class="grid md:grid-cols-2 gap-4">
+                <div>
+                  <input type="text" placeholder="Address Line" required id="address"
+                    class="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-blue-600" />
+                </div>
+                <div>
+                  <input type="text" placeholder="City"
+                    class="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-blue-600" />
+                </div>
+                <div>
+                  <input type="text" placeholder="State"
+                    class="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-blue-600" />
+                </div>
+                <div>
+                  <input type="text" placeholder="Zip Code"
+                    class="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-blue-600" />
+                </div>
+              </div>
+
+              <div class="mt-8">
+              <h3 class="text-base text-gray-800 mb-4">Booking Details</h3>
+              <div class="grid md:grid-cols-2 gap-4">
+                <div>
+                  <input type="text" placeholder="total booking days" required id="booking_days" 
+                    class="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-blue-600" />
+                </div>
+                <div>
+                  <input type="date" placeholder="End date" 
+                    class="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-blue-600" />
+                </div>
+                <div>
+                  <input type="text" placeholder="Total Booking Room" required id="booking_room"
+                    class="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-blue-600" />
+                </div>
+                <div>
+                  <label for="payment_method" class="sr-only">Payment Method</label>
+                    <select name="payment_method" required  id="payment_method" class="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-blue-600">
+                      <option value select >select</option>
+                      <option value="cash on delivery">cash on Delivery</option>
+                      <option value="esewa">Esewa</option>
+                    </select>
+                  {% comment %} <input type="text" placeholder="Payment method"
+                    class="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-blue-600" /> {% endcomment %}
+                </div>
+              </div> -->
+
+              <!-- <div class="flex gap-4 max-md:flex-col mt-8">
+              {% csrf_token %}
+                <a href="#" type="button" class="rounded-md px-6 py-3 w-full text-sm tracking-wide bg-transparent hover:bg-gray-100 border border-gray-300 text-gray-800 text-center max-md:order-1">Cancel</a>
+                <button class="rounded-md px-6 py-3 w-full text-sm tracking-wide bg-blue-600 hover:bg-blue-700 text-center text-white">Complete Booking</button>
+                {% comment %} <input type="submit" name="submit" class="btn btn-primary" value="Submit"> {% endcomment %}
+
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div> -->
+
+    </div>
+</div>
+
+{% endblock %}

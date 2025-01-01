@@ -1,0 +1,203 @@
+{% extends "layout.html" %} {% block content %}
+
+<div class="font-sans bg-gray-700">
+  <div class="p-4 lg:max-w-7xl max-w-2xl max-lg:mx-auto">
+    <div class="grid items-start grid-cols-1 lg:grid-cols-5 gap-12">
+      <div class="lg:col-span-3 w-full lg:sticky top-0 text-center">
+        <div class="bg-gray-800 px-4 py-12 rounded-xl">
+          <img
+            src="/{{ hotels_obj.images.first.images }}"
+            alt="Hotel Image"
+            class="w-9/12 rounded object-cover mx-auto"
+          />
+        </div>
+
+        {% comment %}
+        <div class="mt-4 flex flex-wrap justify-center gap-4 mx-auto">
+          <div
+            class="w-[90px] h-20 flex items-cemter justify-center bg-gray-800 rounded-xl p-4 cursor-pointer"
+          >
+            <img
+              src="https://readymadeui.com/images/coffee3.webp"
+              alt="Product2"
+              class="w-full object-contain"
+            />
+          </div>
+          <div
+            class="w-[90px] h-20 flex items-cemter justify-center bg-gray-800 rounded-xl p-4 cursor-pointer"
+          >
+            <img
+              src="https://readymadeui.com/images/coffee4.webp"
+              alt="Product2"
+              class="w-full object-contain"
+            />
+          </div>
+          <div
+            class="w-[90px] h-20 flex items-cemter justify-center bg-gray-800 rounded-xl p-4 cursor-pointer"
+          >
+            <img
+              src="https://readymadeui.com/images/coffee5.webp"
+              alt="Product2"
+              class="w-full object-contain"
+            />
+          </div>
+          <div class="w-[90px] h-20 flex items-cemter justify-center bg-gray-800 rounded-xl p-4 cursor-pointer">
+            <img src="https://readymadeui.com/images/coffee6.webp" alt="Product2" class="w-full object-contain"/>
+          </div>
+        </div>
+        {% endcomment %}
+      </div>
+
+      <div class="lg:col-span-2">
+        <h2 class="text-3xl font-semibold text-white">
+          {{hotels_obj.hotel_name}} | Hotel
+        </h2>
+
+        <div class="flex flex-wrap gap-4 mt-8">
+          <p class="text-white text-4xl font-semibold"></p>
+        </div>
+
+        <div class="flex flex-wrap gap-1 mt-4">
+          <h3 class="min-w-[200px] px-4 py-3 text-white text-xl font-semibold text-center">
+            Address
+          </h3>
+          <p class="min-w-[200px] px-4 py-2.5 text-white text-sm font-semibold text-center">
+            {{hotels_obj.address }}
+          </p>
+        </div>
+
+        <div class="flex flex-wrap gap-4 mt-4">
+          <h3 class="min-w-[200px] px-4 py-3 text-white text-xl font-semibold text-center">
+            Prices
+          </h3>
+          <p class="min-w-[200px] px-4 py-2.5 text-white text-sm font-semibold text-center">
+            Rs.{{hotels_obj.hotel_price}}
+          </p>
+        </div>
+        <div class="flex flex-wrap gap-4 mt-4">
+            <h3 class="min-w-[200px] px-4 py-3 text-white text-xl font-semibold text-center">
+              Phone No.
+            </h3>
+            <p class="min-w-[200px] px-4 py-2.5 text-white text-sm font-semibold text-center">
+              {{hotels_obj.phone}}
+            </p>
+          </div>
+
+          <div class="flex flex-wrap gap-4 mt-8">
+            <h3 class="min-w-[200px] px-4 py-3 text-white text-xl font-semibold text-center">
+              The Hotel URL
+            </h3>
+            <p><a href="{{hotels_obj.hotel_url}}" class="min-w-[200px] px-4 py-2.5 text-white text-sm font-semibold text-center" >
+              {{hotels_obj.hotel_url}}</a></p>
+          </div>
+
+        <div class="flex flex-wrap gap-4 mt-8">
+          <a href="{% url 'addtocarts' hotels_obj.uid %}" type="button" class="min-w-[200px] px-4 py-3 bg-yellow-300 hover:bg-yellow-400 text-black text-sm font-semibold rounded text-center">Book now</a>
+          <a href="{% url 'addtocart' hotels_obj.uid %}" type="button" class="min-w-[200px] px-4 py-2.5 border border-yellow-300 bg-transparent text-yellow-300 text-sm font-semibold rounded text-center">Add to cart</a>
+        </div>
+
+        <!-- <div class="flex flex-wrap gap-4 mt-8">
+          <h3 class="min-w-[200px] px-4 py-3 text-white text-xl font-semibold text-center">
+            The Hotel Amenities
+          </h3>
+          <p class="min-w-[200px] px-4 py-2.5 text-white text-sm font-semibold text-center" >
+            {{hotels_obj.amenities}}
+          </p>
+        </div> -->
+
+        <div class="mt-8">
+          <h3 class="text-xl font-semibold text-white">About the Hotel</h3>
+          <p class="space-y-3 list-disc mt-4 pl-4 text-sm text-white">
+            {{hotels_obj.description|truncatechars:150}}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% comment %}
+<div class="container mt-5 pt-5">
+  <div class="row search-card-result">
+    <div class="col-md-3">
+      <a href="/hotel-detail/{{hotels_obj.uid}}">
+        <img
+          class="img-fluid"
+          src="/media/{{hotels_obj.images.first.images}}"
+          alt="Card image cap"
+        />
+      </a>
+    </div>
+
+    <div class="col-md-5">
+      <h5>{{hotels_obj.hotel_name}}</h5>
+
+      <p>{{hotels_obj.description|truncatechars:150}}</p>
+      <p>
+        {%for amenitie in hotels_obj.amenities.all %}
+        <b>{{amenitie.amenity_name}}</b>, {% endfor %}
+      </p>
+    </div>
+    <div class="col-md-2 border-left text-center more-offers">
+      <p>Place.com</p>
+      <p>${{hotels_obj.hotel_price}}</p>
+      <p>Room count</p>
+      <p>{{hotels_obj.room_count}}</p>
+    </div>
+    <div class="col-md-2 border-left text-center more-offers">
+      <div class="btn btn-success">View deal</div>
+    </div>
+  </div>
+  <div class="row">
+    {% for image in hotels_obj.images.all %}
+    <div class="col-md-3">
+      <img src="/media/{{image.images}}" style="height: 150px; width: 150px" />
+    </div>
+    {% endfor %}
+  </div>
+  {% if request.user.is_authenticated %}
+  <div class="filter-card">
+    <h5>Book Hotel</h5>
+    {%include "messages.html"%}
+    <form method="post">
+      {% csrf_token %}
+      <div class="row form-group">
+        <div class="col-md-12">
+          <label for="mintopay">Check in</label>
+          <p>
+            <input
+              type="date"
+              name="checkin"
+              id="checkin"
+              class="form-control"
+            />
+          </p>
+        </div>
+        <div class="col-md-12">
+          <label for="maxtopay">Check out</label>
+          <p>
+            <input
+              type="date"
+              name="checkout"
+              id="checkout"
+              class="form-control"
+            />
+          </p>
+        </div>
+      </div>
+
+      <div class="row form-group">
+        <div class="col-md-12">
+          <input type="submit" class="btn btn-primary btn-block" value="Book" />
+        </div>
+      </div>
+    </form>
+  </div>
+  {% else %}
+
+  <a href="/login/" class="btn btn-primary mt-5">Login</a>
+  {% endif %}
+</div>
+{% endcomment %} 
+
+{% endblock %}

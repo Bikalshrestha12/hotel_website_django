@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+
+{%  block content %}
+<div class="font-[sans-serif] overflow-x-auto">
+      <table class="min-w-full bg-white">
+        <thead class="bg-gray-800 whitespace-nowrap">
+          <tr>
+            <th class="p-4 text-left text-sm font-medium text-white">
+              Name
+            </th>
+            <th class="p-4 text-left text-sm font-medium text-white">
+              Price
+            </th>
+            <th class="p-4 text-left text-sm font-medium text-white">
+              Address
+            </th>
+            <th class="p-4 text-left text-sm font-medium text-white">
+              Phone
+            </th>
+            <th class="p-4 text-left text-sm font-medium text-white">
+              Actions
+            </th>
+          </tr>
+        </thead>
+
+        <tbody class="whitespace-nowrap">
+        {% for s in item %}
+          <tr class="even:bg-blue-50">
+            <td class="p-4 text-sm text-black">
+              {{ s.hotel.hotel_name }}
+            </td>
+            <td class="p-4 text-sm text-black">
+              {{ s.hotel.hotel_price }}
+            </td>
+            <td class="p-4 text-sm text-black">
+              {{ s.hotel.address }}
+            </td>
+            <td class="p-4 text-sm text-black">
+              {{ s.hotel.phone }}
+            </td>
+            <td class="p-4">
+                <a href="{% url 'bookingitem' s.uid s.hotel.uid %}" type="button"
+                    class="px-5 py-2.5 rounded-full text-white text-sm tracking-wider font-medium border border-current outline-none bg-green-700 hover:bg-green-800 active:bg-green-700">Book Now</a>
+              <a href="{% url 'removecart' s.uid %}" class="mr-4" title="Delete">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 fill-red-500 hover:fill-red-700" viewBox="0 0 24 24">
+                  <path
+                    d="M19 7a1 1 0 0 0-1 1v11.191A1.92 1.92 0 0 1 15.99 21H8.01A1.92 1.92 0 0 1 6 19.191V8a1 1 0 0 0-2 0v11.191A3.918 3.918 0 0 0 8.01 23h7.98A3.918 3.918 0 0 0 20 19.191V8a1 1 0 0 0-1-1Zm1-3h-4V2a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v2H4a1 1 0 0 0 0 2h16a1 1 0 0 0 0-2ZM10 4V3h4v1Z"
+                    data-original="#000000" />
+                  <path d="M11 17v-7a1 1 0 0 0-2 0v7a1 1 0 0 0 2 0Zm4 0v-7a1 1 0 0 0-2 0v7a1 1 0 0 0 2 0Z"
+                    data-original="#000000" />
+                </svg>
+              </a>
+            </td>
+            {% endfor %}
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+{% endblock %}

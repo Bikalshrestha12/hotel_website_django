@@ -1,0 +1,97 @@
+{% extends 'adminlayout.html' %}
+{% load crispy_forms_tags %}
+{% comment %} {% load bootstrap %} {% endcomment %}
+{% load static %}
+
+{% block title %}
+  <title>Destination List</title>
+{% endblock %}
+
+{% block main_content %}
+<style>
+    .tour{
+        background: url("https://media4.giphy.com/media/3oKIPxjZBLeNR9RM76/giphy.webp?cid=790b7611pt2av6zvyptxuli05yqrosm26fexrvaoetqn7idl&ep=v1_gifs_search&rid=giphy.webp&ct=g");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        background-color: hsla(0, 0%, 0%, 0.7);
+        background-blend-mode: overlay;
+        display: grid;
+        place-items: center;
+        min-height: 600px;
+        text-align: center;
+        padding-top: 125px;
+        color: white;
+    }
+    
+    .del {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 160px;
+  height: 50px;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.del div {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: none;
+  box-shadow: 4px 4px 6px 0 rgba(255,255,255,.5),
+              -4px -4px 6px 0 rgba(116, 125, 136, .5), 
+    inset -4px -4px 6px 0 rgba(255,255,255,.2),
+    inset 4px 4px 6px 0 rgba(0, 0, 0, .4);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 30px;
+  letter-spacing: 1px;
+  color: #ff0000;
+  z-index: 1;
+  transition: .6s;
+}
+
+.del:hover div {
+  letter-spacing: 4px;
+  color: #fff;
+  background: #ff0000;
+}
+
+</style>
+
+
+<div class="tour">
+<h1 class="text-white">Destination List Packages</h1>
+<a href="{% url 'destination_create' %}" class="btn btn-primary mb-3">Other Destination Add</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>location</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for destination in destination %}
+        <tr>
+            <td>{{ destination.location }}</td>
+            <td>
+                <a href="{% url 'destination_update' destination.pk %}"><div class="del"><div>Edit</div></div></a>
+                <a href="{% url 'destination_delete' destination.pk %}"> <div class="del"><div>Delete</div></div></a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">No destinations found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+</div>
+{% endblock %}
